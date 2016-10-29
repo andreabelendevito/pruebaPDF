@@ -1,18 +1,142 @@
 package creadorpdf;
+import java.io.FileOutputStream;
 import java.util.Date;
 
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chapter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Section;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 public class pruebita {
+	
+	private static String FILE = "/home/army/Escritorio/otroPDF.pdf";
+    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+                    Font.BOLD);
+    private static Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,
+                    Font.NORMAL, BaseColor.RED);
+    private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
+                    Font.BOLD);
+    private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 5,
+                    Font.BOLD);
 
 	public static void main(String[] args) {
 		
-		System.out.println(new Date());
-		Date hoy= new Date();
-		String miFecha= DateAFecha(hoy);
-		System.out.println(miFecha);
+		try {
+            Document document = new Document();//creo un nuevo documento
+            
+            //FILE ES EL PATH LA RUTA DONDE SE CREARA EL PDF
+            PdfWriter.getInstance(document, new FileOutputStream(FILE));//creo un nuevo FOS para escribir el archivo
+            
+            document.open(); //abro el documento
+            
+            addTitlePage(document);
+//            Chapter capitulo= new Chapter(1);
+//            document.add(capitulo);
+//            Paragraph parrafo= new Paragraph();
+//            document.add(parrafo);
+//            
+//            Section seccion= capitulo.addSection(parrafo);
+//            document.add(seccion);
+//            
+//            crearTabla(seccion);
+            agregarContenido(document);
+            
+            document.close();
+            
+        } 
+		catch (Exception e) {
+            e.printStackTrace();
+        }       
+   
 		
 		
+		
+		
+		
+		
+		
+		
+}
+	private static void addTitlePage(Document document)
+            throws DocumentException {
+    Paragraph preface = new Paragraph();
+    
+    preface.add(new Paragraph("Comprobante asignación sala de ensayo", catFont));
 
+    Date hoy= new Date();
+	String miFecha= DateAFecha(hoy);
+    
+    preface.add(new Paragraph("Se extiende comprobante a: " + System.getProperty("user.name") + ", el dia" + miFecha, smallBold));
+   
+    document.add(preface);
+    
+}
+	
+	
+	
+	
+	public static void crearTabla (Section unaSeccion) throws BadElementException {
+		PdfPTable table = new PdfPTable(3); //creo una tabla de 3 col y 3 fil
+		
+		PdfPCell c1 = new PdfPCell(new Phrase("Oferente"));
+		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        
+        c1 = new PdfPCell(new Phrase("Horario"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        c1 = new PdfPCell(new Phrase("Beneficio"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        table.setHeaderRows(1);
+        
+        table.addCell("1.0");
+        table.addCell("1.1");
+        table.addCell("1.2");
+        table.addCell("2.1");
+        table.addCell("2.2");
+        table.addCell("2.3");
+
+        
+        unaSeccion.add(table);
+        
+        
 	}
+	private static void agregarContenido(Document document) throws DocumentException {
+		
+		Chapter capitulo= new Chapter(1);
+		document.add(capitulo);
+        Paragraph parrafo= new Paragraph();
+        document.add(parrafo);
+        
+        Section seccion= capitulo.addSection(parrafo);
+        document.add(seccion);
+        
+        crearTabla(seccion);
+        
+        document.close();
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public static String DateAFecha(Date date){
 		

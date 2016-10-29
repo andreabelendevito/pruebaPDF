@@ -41,7 +41,12 @@ public class FirstPdf {
                         document.open(); //abro el documento
                         
                         addMetaData(document); //propiedades del documento
-                        addTitlePage(document);
+                        
+                        addTitlePage(document); // titulo y primer linea
+                        
+                        //Creo una lista de Strings con los datos de todos los oferentes 
+                        
+                     
                         addContent(document);
                         document.close();
                 } catch (Exception e) {
@@ -90,79 +95,92 @@ public class FirstPdf {
         }
 
         private static void addContent(Document document) throws DocumentException {
-                Anchor anchor = new Anchor("First Chapter", catFont);
-                anchor.setName("First Chapter");
+                Anchor anchor = new Anchor("r", catFont);
+                anchor.setName("");
 
                 // Second parameter is the number of the chapter
-                Chapter catPart = new Chapter(new Paragraph(anchor), 1);
+                Chapter Capitulo = new Chapter(new Paragraph(anchor), 1);
 
-                Paragraph subPara = new Paragraph("Subcategory 1", subFont);
-                Section subCatPart = catPart.addSection(subPara);
-                subCatPart.add(new Paragraph("Hello"));
+                Paragraph Paragrafo = new Paragraph("", subFont);
+                Section Seccion = Capitulo.addSection(Paragrafo);
+                //Seccion.add(new Paragraph(""));
 
-                subPara = new Paragraph("Subcategory 2", subFont);
-                subCatPart = catPart.addSection(subPara);
-                subCatPart.add(new Paragraph("Paragraph 1"));
-                subCatPart.add(new Paragraph("Paragraph 2"));
-                subCatPart.add(new Paragraph("Paragraph 3"));
+                //Paragrafo = new Paragraph("Subcategory 2", subFont);
+                //Seccion = Capitulo.addSection(Paragrafo);
+//                Seccion.add(new Paragraph("Paragraph 1"));
+//                Seccion.add(new Paragraph("Paragraph 2"));
+//                Seccion.add(new Paragraph("Paragraph 3"));
 
                 // add a list
-                createList(subCatPart);
-                Paragraph paragraph = new Paragraph();
-                addEmptyLine(paragraph, 5);
-                subCatPart.add(paragraph);
+//                createList(Seccion);
+//                Paragraph paragraph = new Paragraph();
+//                addEmptyLine(paragraph, 5);
+//                Seccion.add(paragraph);
 
                 // add a table
-                createTable(subCatPart);
+                createTable(Seccion);
 
                 // now add all this to the document
-                document.add(catPart);
+                document.add(Capitulo);
 
                 // Next section
-                anchor = new Anchor("Second Chapter", catFont);
-                anchor.setName("Second Chapter");
+                //anchor = new Anchor("Second Chapter", catFont);
+                //anchor.setName("Second Chapter");
 
                 // Second parameter is the number of the chapter
-                catPart = new Chapter(new Paragraph(anchor), 1);
+                //Capitulo = new Chapter(new Paragraph(anchor), 1);
 
-                subPara = new Paragraph("Subcategory", subFont);
-                subCatPart = catPart.addSection(subPara);
-                subCatPart.add(new Paragraph("This is a very important message"));
+                //Paragrafo = new Paragraph("Subcategory", subFont);
+                //Seccion = Capitulo.addSection(Paragrafo);
+                //Seccion.add(new Paragraph("This is a very important message"));
 
                 // now add all this to the document
-                document.add(catPart);
+                document.add(Capitulo);
 
         }
 
         private static void createTable(Section subCatPart)
                         throws BadElementException {
-                PdfPTable table = new PdfPTable(3);
+                PdfPTable table = new PdfPTable(5);
 
                 // t.setBorderColor(BaseColor.GRAY);
                 // t.setPadding(4);
                 // t.setSpacing(4);
                 // t.setBorderWidth(1);
 
-                PdfPCell c1 = new PdfPCell(new Phrase("Table Header 1"));
+                PdfPCell c1 = new PdfPCell(new Phrase("Oferente"));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
 
-                c1 = new PdfPCell(new Phrase("Table Header 2"));
+                c1 = new PdfPCell(new Phrase("Horario"));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
 
-                c1 = new PdfPCell(new Phrase("Table Header 3"));
+                c1 = new PdfPCell(new Phrase("DNI"));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
                 table.setHeaderRows(1);
-
-                table.addCell("1.0");
-                table.addCell("1.1");
-                table.addCell("1.2");
-                table.addCell("2.1");
-                table.addCell("2.2");
-                table.addCell("2.3");
-
+                
+                c1 = new PdfPCell(new Phrase("Monto"));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c1);
+                table.setHeaderRows(1);
+                
+                c1 = new PdfPCell(new Phrase("Telefono"));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c1);
+                table.setHeaderRows(1);
+                
+                
+                //Recibo una lista de Strings y los meto en las celdas
+                
+                Oferente[] offers= generarListaOferentes();
+                
+                for(int i=0; i<offers.length-1; i++){
+                	
+                	rellenarOfferATabla(offers[i], table );
+                }
+                
                 subCatPart.add(table);
 
         }
@@ -240,4 +258,49 @@ public class FirstPdf {
     		return fechaRet;		
     		
     	}
+
+        public static Oferente[] generarListaOferentes(){
+        	
+        	Oferente of1= new Oferente("Belu","12345858","200$","10 a 15 hs", "4668-4893");
+        	
+        	Oferente of2= new Oferente("Maria","35021693","600$","11 a 15 hs", "4667-4892");
+        	
+        	Oferente of3= new Oferente("Luis","1234567","350$","19 a 22 hs", "4651-4891");
+        	
+        	Oferente of4= new Oferente("Daniel","98765432","987$","08 a 17 hs", "4347-4894");
+        	
+        	Oferente of5= new Oferente("Jorge","15935741","1000$","01 a 02 hs", "4689-4895");
+        	
+        	Oferente of6= new Oferente("Jesica","95175363","110$","03 a 07 hs", "4451-4896");
+        	
+        	Oferente of7= new Oferente("Leandro","58972636","624$","13 a 14 hs", "4666-4897");
+        	
+        	
+        	
+        	//los cargo en una lista
+        	
+        	Oferente[] offers= new Oferente[8];
+        	
+        	//cargo los oferentes en la lista
+        	
+        	offers[0]=of1; offers[1]=of2;offers[2]=of3; offers[3]=of4;offers[4]=of5; offers[5]=of6; offers[6]=of7;
+        	
+        	return offers;
+        	
+        }
+
+        public static void rellenarOfferATabla(Oferente offer, PdfPTable tabla ){
+        	
+        	tabla.addCell(offer.getNombre());
+            tabla.addCell(offer.getHorario());
+            tabla.addCell(offer.getDNI());
+            tabla.addCell(offer.getMonto());
+            tabla.addCell(offer.getTelefono());
+        		
+        }
+
+
+
+
+
 }
