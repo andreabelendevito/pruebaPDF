@@ -49,6 +49,7 @@ public class FirstPdf {
                      
                         addContent(document);
                         document.close();
+                        
                 } catch (Exception e) {
                         e.printStackTrace();
                 }
@@ -81,13 +82,7 @@ public class FirstPdf {
         		String miFecha= DateAFecha(hoy);
                 
                 preface.add(new Paragraph("Se extiende comprobante a: " + System.getProperty("user.name") + ", el dia" + miFecha, smallBold));
-                //addEmptyLine(preface, 3);
-                //preface.add(new Paragraph("This document describes something which is very important ",smallBold));
-
-                //addEmptyLine(preface, 8);
-
-                //preface.add(new Paragraph( "This document is a preliminary version and not subject to your license agreement or any other agreement with vogella.com ;-).",
-                //                redFont));
+                
 
                 document.add(preface);
                 // Start a new page
@@ -95,27 +90,15 @@ public class FirstPdf {
         }
 
         private static void addContent(Document document) throws DocumentException {
-                Anchor anchor = new Anchor("r", catFont);
+                Anchor anchor = new Anchor("", catFont);
                 anchor.setName("");
 
                 // Second parameter is the number of the chapter
-                Chapter Capitulo = new Chapter(new Paragraph(anchor), 1);
+                Chapter Capitulo = new Chapter(new Paragraph(anchor), 0);
 
                 Paragraph Paragrafo = new Paragraph("", subFont);
                 Section Seccion = Capitulo.addSection(Paragrafo);
-                //Seccion.add(new Paragraph(""));
-
-                //Paragrafo = new Paragraph("Subcategory 2", subFont);
-                //Seccion = Capitulo.addSection(Paragrafo);
-//                Seccion.add(new Paragraph("Paragraph 1"));
-//                Seccion.add(new Paragraph("Paragraph 2"));
-//                Seccion.add(new Paragraph("Paragraph 3"));
-
-                // add a list
-//                createList(Seccion);
-//                Paragraph paragraph = new Paragraph();
-//                addEmptyLine(paragraph, 5);
-//                Seccion.add(paragraph);
+                
 
                 // add a table
                 createTable(Seccion);
@@ -123,16 +106,7 @@ public class FirstPdf {
                 // now add all this to the document
                 document.add(Capitulo);
 
-                // Next section
-                //anchor = new Anchor("Second Chapter", catFont);
-                //anchor.setName("Second Chapter");
-
-                // Second parameter is the number of the chapter
-                //Capitulo = new Chapter(new Paragraph(anchor), 1);
-
-                //Paragrafo = new Paragraph("Subcategory", subFont);
-                //Seccion = Capitulo.addSection(Paragrafo);
-                //Seccion.add(new Paragraph("This is a very important message"));
+                
 
                 // now add all this to the document
                 document.add(Capitulo);
@@ -185,13 +159,13 @@ public class FirstPdf {
 
         }
 
-        private static void createList(Section subCatPart) {
-                List list = new List(true, false, 10);
-                list.add(new ListItem("First point"));
-                list.add(new ListItem("Second point"));
-                list.add(new ListItem("Third point"));
-                subCatPart.add(list);
-        }
+//        private static void createList(Section subCatPart) {
+//                List list = new List(true, false, 10);
+//                list.add(new ListItem("First point"));
+//                list.add(new ListItem("Second point"));
+//                list.add(new ListItem("Third point"));
+//                subCatPart.add(list);
+//        }
 
         private static void addEmptyLine(Paragraph paragraph, int number) {
                 for (int i = 0; i < number; i++) {
