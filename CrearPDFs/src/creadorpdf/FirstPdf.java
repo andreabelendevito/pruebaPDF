@@ -91,7 +91,7 @@ public class FirstPdf {
 
         private static void addContent(Document document) throws DocumentException {
                 Anchor anchor = new Anchor("", catFont);
-                anchor.setName("");
+                //anchor.setName("");
 
                 // Second parameter is the number of the chapter
                 Chapter Capitulo = new Chapter(new Paragraph(anchor), 0);
@@ -106,22 +106,13 @@ public class FirstPdf {
                 // now add all this to the document
                 document.add(Capitulo);
 
-                
-
-                // now add all this to the document
-                document.add(Capitulo);
-
         }
 
         private static void createTable(Section subCatPart)
                         throws BadElementException {
                 PdfPTable table = new PdfPTable(5);
 
-                // t.setBorderColor(BaseColor.GRAY);
-                // t.setPadding(4);
-                // t.setSpacing(4);
-                // t.setBorderWidth(1);
-
+               
                 PdfPCell c1 = new PdfPCell(new Phrase("Oferente"));
                 c1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(c1);
@@ -158,14 +149,6 @@ public class FirstPdf {
                 subCatPart.add(table);
 
         }
-
-//        private static void createList(Section subCatPart) {
-//                List list = new List(true, false, 10);
-//                list.add(new ListItem("First point"));
-//                list.add(new ListItem("Second point"));
-//                list.add(new ListItem("Third point"));
-//                subCatPart.add(list);
-//        }
 
         private static void addEmptyLine(Paragraph paragraph, int number) {
                 for (int i = 0; i < number; i++) {
