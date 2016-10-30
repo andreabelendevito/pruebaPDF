@@ -20,10 +20,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class PDFCreator {
 	
-	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,Font.BOLD);
+	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 24,Font.BOLD);
 	private static Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,Font.NORMAL, BaseColor.RED);
 	private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,Font.BOLD);
-	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 5,Font.BOLD);
+	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 9,Font.BOLD);
 	 
 	    /** The resulting PDF file. */
 	    public static final String RESULT
@@ -52,10 +52,7 @@ public class PDFCreator {
 	       
 	        addTitlePage(document);
 	        
-	        document.addTitle("hello");
-	        
 	        document.add(createFirstTable());
-	        
 	        
 	        
 	        document.close();
@@ -69,22 +66,27 @@ public class PDFCreator {
 	        PdfPCell cell;
 	        // we add a cell with colspan 3
 	        cell = new PdfPCell(new Phrase("Oferente"));
+	        cell.setBackgroundColor(BaseColor.RED);
 	        cell.setColspan(1);
 	        table.addCell(cell);
 	        // now we add a cell with rowspan 2
 	        cell = new PdfPCell(new Phrase("Horario"));
+	        cell.setBackgroundColor(BaseColor.RED);
 	        cell.setRowspan(1);
 	        table.addCell(cell);
 	        
 	        cell = new PdfPCell(new Phrase("DNI"));
+	        cell.setBackgroundColor(BaseColor.RED);
 	        cell.setRowspan(1);
 	        table.addCell(cell);
 	        
 	        cell = new PdfPCell(new Phrase("Monto"));
+	        cell.setBackgroundColor(BaseColor.RED);
 	        cell.setRowspan(1);
 	        table.addCell(cell);
 	        
 	        cell = new PdfPCell(new Phrase("Telefono"));
+	        cell.setBackgroundColor(BaseColor.RED);
 	        cell.setRowspan(1);
 	        table.addCell(cell);
 	        
@@ -94,6 +96,7 @@ public class PDFCreator {
             for(int i=0; i<offers.length-1; i++){
             	
             	rellenarOfferATabla(offers[i], table );
+            
             }
 	        
 	        
@@ -129,8 +132,12 @@ public class PDFCreator {
         	return offers;
         	
 	    }
+	    
 	    public static void rellenarOfferATabla(Oferente offer, PdfPTable tabla ){
-        	
+	    	PdfPCell actual;
+	    	actual=tabla.getDefaultCell();
+	    	actual.setBackgroundColor(BaseColor.LIGHT_GRAY);
+	    	
         	tabla.addCell(offer.getNombre());
             tabla.addCell(offer.getHorario());
             tabla.addCell(offer.getDNI());
@@ -148,7 +155,8 @@ public class PDFCreator {
 	    	String miFecha= DateAFecha(hoy);
         
 	    	preface.add(new Paragraph("Se extiende comprobante a: " + System.getProperty("user.name") + ", el dia" + miFecha, smallBold));
-        
+            
+	    	preface.add(new Paragraph(" ")); //-----
 
 	    	document.add(preface);
         
