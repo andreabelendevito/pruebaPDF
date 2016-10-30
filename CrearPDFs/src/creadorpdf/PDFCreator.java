@@ -25,16 +25,11 @@ public class PDFCreator {
 	private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,Font.BOLD);
 	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 9,Font.BOLD);
 	 
-	    /** The resulting PDF file. */
+	   
 	    public static final String RESULT
 	        = "/home/army/Escritorio/anotherPDF.pdf";
 	 
-	    /**
-	     * Main method.
-	     * @param    args    no arguments needed
-	     * @throws DocumentException 
-	     * @throws IOException
-	     */
+	    
 	    public static void main(String[] args)
 	        throws IOException, DocumentException {
 	        new PDFCreator().createPdf(RESULT);
@@ -60,16 +55,16 @@ public class PDFCreator {
 	 
 	    
 	    public static PdfPTable createFirstTable() {
-	    	// a table with three columns
+	    	
 	        PdfPTable table = new PdfPTable(5);
-	        // the cell object
+	        
 	        PdfPCell cell;
-	        // we add a cell with colspan 3
+	       
 	        cell = new PdfPCell(new Phrase("Oferente"));
 	        cell.setBackgroundColor(BaseColor.RED);
 	        cell.setColspan(1);
 	        table.addCell(cell);
-	        // now we add a cell with rowspan 2
+	        
 	        cell = new PdfPCell(new Phrase("Horario"));
 	        cell.setBackgroundColor(BaseColor.RED);
 	        cell.setRowspan(1);
@@ -154,13 +149,14 @@ public class PDFCreator {
 	    	Date hoy= new Date();
 	    	String miFecha= DateAFecha(hoy);
         
-	    	preface.add(new Paragraph("Se extiende comprobante a: " + System.getProperty("user.name") + ", el dia" + miFecha, smallBold));
+	    	preface.add(new Paragraph("Se extiende comprobante a: " + System.getProperty("user.name") + ", el dia " + miFecha, smallBold));
             
 	    	preface.add(new Paragraph(" ")); //-----
 
 	    	document.add(preface);
         
 	    }
+	    
 	    public static String DateAFecha(Date date){
     		
     		Date unaFecha=date;
